@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  description: MyString
+  hourly_rate: 1.5
+  service_type: MyString
+
+two:
+  user: two
+  description: MyString
+  hourly_rate: 1.5
+  service_type: MyString
