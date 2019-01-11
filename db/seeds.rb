@@ -12,7 +12,7 @@ User.destroy_all
 
 # User.create!(email: 'meg@ex.com', password: 'balls')
 meg = User.create("email": "meg@e.com", "password": "balls", "first_name": "Meg")
-jan = User.create("email": "jan@e.com", "password": "balls")
+jan = User.create("email": "jan@e.com", "password": "balls", "first_name": "Janu")
 
 meg.messages.create("content": "sending balls to jannnnnn", "messaged_user_id": jan.id)
 jan.messages.create("content": "sending balls back to megggggg", "messaged_user_id": meg.id)
