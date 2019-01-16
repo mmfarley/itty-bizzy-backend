@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :bills
       resources :messages
       resources :businesses
+      get '/messages/user/:user_id', to: 'messages#user_messages'
     end
   end
 end

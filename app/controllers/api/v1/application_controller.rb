@@ -11,7 +11,7 @@ class Api::V1::ApplicationController < ApplicationController
         if request.headers['Authorization']
             method, token = request.headers['Authorization'].split(' ')
             begin
-                payload, headers = JWT.decode(token, 'my_apps_secret')
+                payload, headers = JWT.decode(token, ENV["my_apps_secret"])
                 current_user = User.find(payload['user_id'])
             rescue JWT::DecodeError
                 nil

@@ -1,6 +1,15 @@
 class Api::V1::MessagesController < Api::V1::ApplicationController
   before_action :define_current_message
 
+  def user_messages
+    messages = Message.where(user_id: params[:user_id])
+    received_messages = Message.where(messaged_user_id: params[:user_id])
+    messaged_user_ids = messages.map{|message| message.messaged_user_id}
+    received_messages.each{|message| messaged_user_ids.push(message.user_id)}
+    byebug
+    render json: {messages: [messages, received_messages].flatten, messaged_user_ids: messaged_user_ids.uniq}
+  end
+
   def create
     message = Message.create(message_params)
     render json: message
@@ -25,7 +34,7 @@ class Api::V1::MessagesController < Api::V1::ApplicationController
   end
 
   def message_params
-    params.permit(:content, :sender_user_id, :receiver_user_id)
+    params.permit(:content, :user_id, :messaged_user_id)
   end
 
   def define_current_message
