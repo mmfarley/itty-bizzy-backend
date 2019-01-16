@@ -16,5 +16,10 @@ jan = User.create("email": "jan@e.com", "password": "balls", "first_name": "Janu
 
 meg.messages.create("content": "sending balls to jannnnnn", "messaged_user_id": jan.id)
 jan.messages.create("content": "sending balls back to megggggg", "messaged_user_id": meg.id)
+meg.messages.create("content": "hiiiiiiiiiiiiiiiiiiiiiiiiiiii", "messaged_user_id": jan.id)
+jan.messages.create("content": "what up upup upup up upu p up up up up", "messaged_user_id": meg.id)
 
-meg.bills.create("amount": 1.0, "billed_user_id": jan.id)
+meg.bills.create("amount": 1.0, "billed_user_id": jan.id, "due_date": Time.now + 7.days)
+jan.bills.create("amount": 100.0, "billed_user_id": meg.id, "due_date": Time.now + 8.days)
+meg.bills.create("amount": 1.0, "billed_user_id": jan.id, "due_date": Time.now + 9.days)
+meg.bills.create("amount": 1.0, "billed_user_id": jan.id, "due_date": Time.now + 6.days)

@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_191311) do
     t.text "content"
     t.bigint "user_id"
     t.bigint "messaged_user_id"
+    t.datetime "sent_at", default: "2019-01-16 17:28:12"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["content"], name: "index_messages_on_content"
@@ -55,6 +56,8 @@ ActiveRecord::Schema.define(version: 2019_01_10_191311) do
     t.string "last_name"
     t.string "email"
     t.string "password_digest"
+    t.float "latitude", default: 29.760427
+    t.float "longitude", default: -95.369804
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
