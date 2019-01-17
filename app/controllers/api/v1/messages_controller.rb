@@ -8,10 +8,10 @@ class Api::V1::MessagesController < Api::V1::ApplicationController
     messaged_user_ids = messages.map{|message| message.messaged_user_id}
     received_messages.each{|message| messaged_user_ids.push(message.user_id)}
 
-    messaged_users = []
+    # messaged_users = []
     conversations = []
     messaged_user_ids.uniq.each do |id|
-      messaged_users.push(User.find(id))
+      messaged_user = User.find(id)
       conversation = []
       messages.each do |message|
         if message.messaged_user_id == id
@@ -24,10 +24,10 @@ class Api::V1::MessagesController < Api::V1::ApplicationController
         end
       end
       conversation.sort_by!{|message| message.sent_at}
-      conversations.push(conversation)
+      conversations.push({:messaged_user => messaged_user, :conversation => conversation})
     end
 
-    render json: {conversations: conversations, messaged_users: messaged_users}
+    render json: {conversations: conversations}
   end
 
   def create
