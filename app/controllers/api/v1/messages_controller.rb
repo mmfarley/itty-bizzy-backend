@@ -2,12 +2,32 @@ class Api::V1::MessagesController < Api::V1::ApplicationController
   before_action :define_current_message
 
   def user_messages
-    messages = Message.where(user_id: params[:user_id])
-    received_messages = Message.where(messaged_user_id: params[:user_id])
+    messages = Message.where(user_id: params[:user_id]).order(:created_at)
+    received_messages = Message.where(messaged_user_id: params[:user_id]).order(:created_at)
+
     messaged_user_ids = messages.map{|message| message.messaged_user_id}
     received_messages.each{|message| messaged_user_ids.push(message.user_id)}
-    byebug
-    render json: {messages: [messages, received_messages].flatten, messaged_user_ids: messaged_user_ids.uniq}
+
+    messaged_users = []
+    conversations = []
+    messaged_user_ids.uniq.each do |id|
+      messaged_users.push(User.find(id))
+      conversation = []
+      messages.each do |message|
+        if message.messaged_user_id == id
+          conversation.push(message)
+        end
+      end
+      received_messages.each do |message|
+        if message.user_id == id
+          conversation.push(message)
+        end
+      end
+      conversation.sort_by!{|message| message.sent_at}
+      conversations.push(conversation)
+    end
+
+    render json: {conversations: conversations, messaged_users: messaged_users}
   end
 
   def create
