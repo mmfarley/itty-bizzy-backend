@@ -5,7 +5,15 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 
   def create
     user = User.create(user_params)
-    render json: user
+    render json: {
+        token: JWT.encode({ user_id: user.id }, ENV["my_apps_secret"]),
+        id: user.id,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email,
+        latitude: user.latitude,
+        longitude: user.longitude
+    }
   end
 
   def index
