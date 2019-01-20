@@ -2,6 +2,11 @@ class Api::V1::BusinessesController < Api::V1::ApplicationController
 
   before_action :define_current_business
 
+  def user_biz
+    user_biz = Business.where(user_id: params[:user_id])
+    render json: user_biz
+  end
+
   def create
     business = Business.create(business_params)
     render json: business
@@ -26,7 +31,7 @@ class Api::V1::BusinessesController < Api::V1::ApplicationController
   end
 
   def business_params()
-    params.permit(:user_id, :description, :hourly_rate, :service_type)
+    params.permit(:user_id, :description, :hourly_rate, :service_type, :name)
   end
 
   def define_current_business

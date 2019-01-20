@@ -4,7 +4,6 @@ class CreateMessages < ActiveRecord::Migration[5.2]
       t.text :content, index: true
       t.references :user, index: true, foreign_key: true
       t.references :messaged_user, index: true
-      t.datetime :sent_at, :default => Time.now
 
       t.timestamps
     end

@@ -2,8 +2,9 @@ class CreateBills < ActiveRecord::Migration[5.2]
   def change
     create_table :bills do |t|
       t.string :recipient
+      t.string :sender
       t.float :amount
-      t.datetime :due_date
+      t.string :due_date
       t.references :user, foreign_key: true
       t.references :billed_user
       t.boolean :is_paid, :default => false

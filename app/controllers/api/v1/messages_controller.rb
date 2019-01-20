@@ -8,7 +8,6 @@ class Api::V1::MessagesController < Api::V1::ApplicationController
     messaged_user_ids = messages.map{|message| message.messaged_user_id}
     received_messages.each{|message| messaged_user_ids.push(message.user_id)}
 
-    # messaged_users = []
     conversations = []
     messaged_user_ids.uniq.each do |id|
       messaged_user = User.find(id)
@@ -23,7 +22,7 @@ class Api::V1::MessagesController < Api::V1::ApplicationController
           conversation.push(message)
         end
       end
-      conversation.sort_by!{|message| message.sent_at}
+      conversation.sort_by!{|message| message.created_at}
       conversations.push({:messaged_user => messaged_user, :conversation => conversation})
     end
 
@@ -33,24 +32,6 @@ class Api::V1::MessagesController < Api::V1::ApplicationController
   def create
     message = Message.create(message_params)
     render json: message
-  end
-
-  def index
-    render json: Message.all
-  end
-
-  def show
-    render json: current_message
-  end
-
-  def update
-    current_message.update(message_params)
-    render json: current_message
-  end
-
-  def destroy
-    current_message.destroy
-    render json: current_message
   end
 
   def message_params

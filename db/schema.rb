@@ -17,8 +17,9 @@ ActiveRecord::Schema.define(version: 2019_01_10_191311) do
 
   create_table "bills", force: :cascade do |t|
     t.string "recipient"
+    t.string "sender"
     t.float "amount"
-    t.datetime "due_date"
+    t.string "due_date"
     t.bigint "user_id"
     t.bigint "billed_user_id"
     t.boolean "is_paid", default: false
@@ -33,6 +34,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_191311) do
     t.text "description"
     t.float "hourly_rate"
     t.string "service_type"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_businesses_on_user_id"
@@ -42,7 +44,6 @@ ActiveRecord::Schema.define(version: 2019_01_10_191311) do
     t.text "content"
     t.bigint "user_id"
     t.bigint "messaged_user_id"
-    t.datetime "sent_at", default: "2019-01-16 17:28:12"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["content"], name: "index_messages_on_content"
@@ -52,8 +53,7 @@ ActiveRecord::Schema.define(version: 2019_01_10_191311) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
+    t.string "name"
     t.string "email"
     t.string "password_digest"
     t.float "latitude", default: 29.760427
