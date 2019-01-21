@@ -29,6 +29,21 @@ class Api::V1::MessagesController < Api::V1::ApplicationController
     render json: {conversations: conversations}
   end
 
+  def messaged_users
+    messages = Message.where(user_id: params[:user_id])
+    received_messages = Message.where(messaged_user_id: params[:user_id])
+
+    messaged_user_ids = messages.map{|message| message.messaged_user_id}
+    received_messages.each{|message| messaged_user_ids.push(message.user_id)}
+
+    messaged_users = []
+    messaged_user_ids.uniq.each do |id|
+      messaged_user = User.find(id)
+      messaged_users.push(messaged_user)
+    end
+    render json: messaged_users
+  end
+
   def create
     message = Message.create(message_params)
     render json: message
