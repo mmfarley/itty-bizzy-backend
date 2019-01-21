@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_10_191311) do
+ActiveRecord::Schema.define(version: 2019_01_21_050510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,15 @@ ActiveRecord::Schema.define(version: 2019_01_10_191311) do
     t.index ["user_id"], name: "index_businesses_on_user_id"
   end
 
+  create_table "clients", force: :cascade do |t|
+    t.bigint "client_user_id"
+    t.bigint "business_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_id"], name: "index_clients_on_business_id"
+    t.index ["client_user_id"], name: "index_clients_on_client_user_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.text "content"
     t.bigint "user_id"
@@ -65,6 +74,8 @@ ActiveRecord::Schema.define(version: 2019_01_10_191311) do
   add_foreign_key "bills", "users"
   add_foreign_key "bills", "users", column: "billed_user_id"
   add_foreign_key "businesses", "users"
+  add_foreign_key "clients", "businesses"
+  add_foreign_key "clients", "users", column: "client_user_id"
   add_foreign_key "messages", "users"
   add_foreign_key "messages", "users", column: "messaged_user_id"
 end
