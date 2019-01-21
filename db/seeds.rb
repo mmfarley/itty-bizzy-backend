@@ -26,6 +26,12 @@ jan.bills.create("amount": 100.0, "billed_user_id": meg.id, "due_date": "1/16/19
 meg.bills.create("amount": 1.0, "billed_user_id": jan.id, "due_date": "1/16/19")
 meg.bills.create("amount": 1.0, "billed_user_id": jan.id, "due_date": "1/16/19")
 jan.bills.create("amount": 1000.0, "billed_user_id": meg.id, "due_date": "1/16/19", "is_paid": true)
+jan.bills.create("amount": 100.0, "billed_user_id": meg.id, "due_date": "1/16/19")
+jan.bills.create("amount": 100.0, "billed_user_id": meg.id, "due_date": "1/16/19")
+jan.bills.create("amount": 100.0, "billed_user_id": meg.id, "due_date": "1/16/19")
+jan.bills.create("amount": 100.0, "billed_user_id": meg.id, "due_date": "1/16/19")
+jan.bills.create("amount": 100.0, "billed_user_id": meg.id, "due_date": "1/16/19")
+jan.bills.create("amount": 100.0, "billed_user_id": meg.id, "due_date": "1/16/19")
 
 Business.create("hourly_rate": 40.00, "service_type": "programmer", "description": "i write code and stuff. blah blah blah. you want me to code for you and stuffffff", "user_id": meg.id, "name": "meg programming")
 Business.create("hourly_rate": 40.00, "service_type": "programmer", "description": "i write code and stuff. blah blah blah. you want me to code for you and stuffffff", "user_id": jan.id, "name": "jan programming")
