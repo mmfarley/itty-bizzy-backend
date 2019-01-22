@@ -10,6 +10,7 @@
 Message.destroy_all
 Bill.destroy_all
 Client.destroy_all
+Appointment.destroy_all
 Business.destroy_all
 User.destroy_all
 
@@ -34,8 +35,13 @@ jan.bills.create("amount": 100.0, "billed_user_id": meg.id, "due_date": "1/16/19
 jan.bills.create("amount": 100.0, "billed_user_id": meg.id, "due_date": "1/16/19")
 jan.bills.create("amount": 100.0, "billed_user_id": meg.id, "due_date": "1/16/19")
 
-Business.create("hourly_rate": 40.00, "service_type": "programmer", "description": "i write code and stuff. blah blah blah. you want me to code for you and stuffffff", "user_id": meg.id, "name": "meg programming")
-Business.create("hourly_rate": 40.00, "service_type": "programmer", "description": "i write code and stuff. blah blah blah. you want me to code for you and stuffffff", "user_id": jan.id, "name": "jan programming")
+meg_biz = Business.create("hourly_rate": 40.00, "service_type": "programmer", "description": "i write code and stuff. blah blah blah. you want me to code for you and stuffffff", "user_id": meg.id, "name": "meg programming")
+jan_biz = Business.create("hourly_rate": 40.00, "service_type": "programmer", "description": "i write code and stuff. blah blah blah. you want me to code for you and stuffffff", "user_id": jan.id, "name": "jan programming")
+
+meg_biz.appointments.create("date":"1/22/2019", "appointment_user_id": jan.id)
+meg_biz.appointments.create("date":"1/23/2019", "appointment_user_id": jan.id)
+
+meg_biz.clients.create("client_user_id": jan.id)
 
 #FAKER STUFF EXAMPLE
 # require 'faker'
