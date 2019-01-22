@@ -4,7 +4,7 @@ class Api::V1::ClientsController < Api::V1::ApplicationController
 
   def client_users
     clients = Client.where(business_id: params[:business_id])
-    client_users = clients.map{|client| User.find(client.client_user_id)}
+    client_users = clients.map{|client| [User.find(client.client_user_id), client.id]}
     render json: client_users
   end
 
@@ -32,7 +32,7 @@ class Api::V1::ClientsController < Api::V1::ApplicationController
   end
 
   def client_params
-    params.permit(:client_user_id, :business_id)
+    params.permit(:client_user_id, :business_id, :id)
   end
 
   def define_current_client
