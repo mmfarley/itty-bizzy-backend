@@ -10,7 +10,10 @@ class Api::V1::ClientsController < Api::V1::ApplicationController
 
   def create
     client = Client.create(client_params)
-    render json: client
+
+    clients = Client.where(business_id: params[:business_id])
+    client_users = clients.map{|client| [User.find(client.client_user_id), client.id]}
+    render json: client_users
   end
 
   def index
@@ -28,7 +31,10 @@ class Api::V1::ClientsController < Api::V1::ApplicationController
 
   def destroy
     current_client.destroy
-    render json: current_client
+
+    clients = Client.where(business_id: params[:business_id])
+    client_users = clients.map{|client| [User.find(client.client_user_id), client.id]}
+    render json: client_users
   end
 
   def client_params
