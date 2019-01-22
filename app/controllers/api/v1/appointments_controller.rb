@@ -3,7 +3,11 @@ class Api::V1::AppointmentsController < Api::V1::ApplicationController
   before_action :define_current_appointment
 
   def appointment_users
-    appointments = Appointment.where(business_id: params[:business_id])
+    all_appointments = Appointment.where(business_id: params[:business_id])
+    time = DateTime.now
+    appointments = all_appointments.select do |appointment|
+      (appointment.date == time.strftime("%m/%d/%Y"))||(appointment.date == (time + 1).strftime("%m/%d/%Y"))||(appointment.date == (time + 2).strftime("%m/%d/%Y"))||(appointment.date == (time + 3).strftime("%m/%d/%Y"))||(appointment.date == (time + 4).strftime("%m/%d/%Y"))||(appointment.date == (time + 5).strftime("%m/%d/%Y"))||(appointment.date == (time + 6).strftime("%m/%d/%Y"))
+    end
     appointment_users = appointments.map{|appointment| [User.find(appointment.appointment_user_id), appointment]}
     render json: appointment_users
   end
@@ -11,7 +15,11 @@ class Api::V1::AppointmentsController < Api::V1::ApplicationController
   def create
     appointment = Appointment.create(appointment_params)
 
-    appointments = Appointment.where(business_id: params[:business_id])
+    all_appointments = Appointment.where(business_id: params[:business_id])
+    time = DateTime.now
+    appointments = all_appointments.select do |appointment|
+      (appointment.date == time.strftime("%m/%d/%Y"))||(appointment.date == (time + 1).strftime("%m/%d/%Y"))||(appointment.date == (time + 2).strftime("%m/%d/%Y"))||(appointment.date == (time + 3).strftime("%m/%d/%Y"))||(appointment.date == (time + 4).strftime("%m/%d/%Y"))||(appointment.date == (time + 5).strftime("%m/%d/%Y"))||(appointment.date == (time + 6).strftime("%m/%d/%Y"))
+    end
     appointment_users = appointments.map{|appointment| [User.find(appointment.appointment_user_id), appointment]}
     render json: appointment_users
   end
@@ -32,7 +40,11 @@ class Api::V1::AppointmentsController < Api::V1::ApplicationController
   def destroy
     current_appointment.destroy
 
-    appointments = Appointment.where(business_id: params[:business_id])
+    all_appointments = Appointment.where(business_id: params[:business_id])
+    time = DateTime.now
+    appointments = all_appointments.select do |appointment|
+      (appointment.date == time.strftime("%m/%d/%Y"))||(appointment.date == (time + 1).strftime("%m/%d/%Y"))||(appointment.date == (time + 2).strftime("%m/%d/%Y"))||(appointment.date == (time + 3).strftime("%m/%d/%Y"))||(appointment.date == (time + 4).strftime("%m/%d/%Y"))||(appointment.date == (time + 5).strftime("%m/%d/%Y"))||(appointment.date == (time + 6).strftime("%m/%d/%Y"))
+    end
     appointment_users = appointments.map{|appointment| [User.find(appointment.appointment_user_id), appointment]}
     render json: appointment_users
   end
