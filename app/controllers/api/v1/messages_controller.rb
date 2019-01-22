@@ -30,14 +30,19 @@ class Api::V1::MessagesController < Api::V1::ApplicationController
   end
 
   def messaged_users
-    messages = Message.where(user_id: params[:user_id])
+    id = params[:user_id]
     received_messages = Message.where(messaged_user_id: params[:user_id])
 
-    messaged_user_ids = messages.map{|message| message.messaged_user_id}
-    received_messages.each{|message| messaged_user_ids.push(message.user_id)}
+    messaged_user_ids = received_messages.map{|message| message.user_id}
+    user_biz = Business.where(user_id: id)
+    user_biz_id = user_biz.map{|biz| biz.id}
+    biz_clients = Client.where(business_id: user_biz_id)
+    biz_clients_ids = biz_clients.map{|client| client.client_user_id}
+
+    filtered_user_ids = (messaged_user_ids.uniq - biz_clients_ids.uniq)|(biz_clients_ids.uniq - messaged_user_ids.uniq)
 
     messaged_users = []
-    messaged_user_ids.uniq.each do |id|
+    filtered_user_ids.each do |id|
       messaged_user = User.find(id)
       messaged_users.push(messaged_user)
     end

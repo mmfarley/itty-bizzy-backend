@@ -32,7 +32,7 @@ class Api::V1::ClientsController < Api::V1::ApplicationController
   end
 
   def client_params
-    params.permit()
+    params.permit(:client_user_id, :business_id)
   end
 
   def define_current_client

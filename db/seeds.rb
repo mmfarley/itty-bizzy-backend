@@ -9,6 +9,7 @@
 
 Message.destroy_all
 Bill.destroy_all
+Client.destroy_all
 Business.destroy_all
 User.destroy_all
 
