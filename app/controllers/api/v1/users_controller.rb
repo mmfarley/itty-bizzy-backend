@@ -4,7 +4,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
   skip_before_action :check_authentication, only: [ :index, :create ]
 
   def create
-    user = User.create(user_params)
+    user = User.create!(user_params)
     render json: {user: user, token: JWT.encode({ user_id: user.id }, ENV["my_apps_secret"])}
   end
 
