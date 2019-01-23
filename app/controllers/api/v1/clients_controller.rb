@@ -7,6 +7,12 @@ class Api::V1::ClientsController < Api::V1::ApplicationController
     client_users = clients.map{|client| [User.find(client.client_user_id), client.id]}
     render json: client_users
   end
+  #test this
+  def client_businesses
+    clients = Client.where(client_user_id: params[:client_user_id])
+    client_businesses = clients.map{|client| Business.find(client.business_id)}
+    render json: client_businesses
+  end
 
   def create
     client = Client.create(client_params)

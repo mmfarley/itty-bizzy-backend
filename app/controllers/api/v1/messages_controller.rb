@@ -51,7 +51,32 @@ class Api::V1::MessagesController < Api::V1::ApplicationController
 
   def create
     message = Message.create(message_params)
-    render json: message
+
+    messages = Message.where(user_id: params[:user_id]).order(:created_at)
+    received_messages = Message.where(messaged_user_id: params[:user_id]).order(:created_at)
+
+    messaged_user_ids = messages.map{|message| message.messaged_user_id}
+    received_messages.each{|message| messaged_user_ids.push(message.user_id)}
+
+    conversations = []
+    messaged_user_ids.uniq.each do |id|
+      messaged_user = User.find(id)
+      conversation = []
+      messages.each do |message|
+        if message.messaged_user_id == id
+          conversation.push(message)
+        end
+      end
+      received_messages.each do |message|
+        if message.user_id == id
+          conversation.push(message)
+        end
+      end
+      conversation.sort_by!{|message| message.created_at}
+      conversations.push({:messaged_user => messaged_user, :conversation => conversation})
+    end
+
+    render json: {conversations: conversations}
   end
 
   def message_params

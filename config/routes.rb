@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       get '/clients/users/:business_id', to: 'clients#client_users'
       get '/messages/messaged-users/:user_id', to: 'messages#messaged_users'
       get '/appointments/users/:business_id', to: 'appointments#appointment_users'
+      get '/clients/businesses/:client_user_id', to: 'clients#client_businesses'
     end
   end
 end
