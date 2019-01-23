@@ -4,9 +4,18 @@ class Api::V1::AppointmentsController < Api::V1::ApplicationController
 
   def appointment_users
     all_appointments = Appointment.where(business_id: params[:business_id])
-    time = DateTime.now
-    appointments = all_appointments.select do |appointment|
-      (appointment.date == time.strftime("%m/%d/%Y"))||(appointment.date == (time + 1).strftime("%m/%d/%Y"))||(appointment.date == (time + 2).strftime("%m/%d/%Y"))||(appointment.date == (time + 3).strftime("%m/%d/%Y"))||(appointment.date == (time + 4).strftime("%m/%d/%Y"))||(appointment.date == (time + 5).strftime("%m/%d/%Y"))||(appointment.date == (time + 6).strftime("%m/%d/%Y"))
+    time = DateTime.now.strftime("%m/%d/%Y")
+    appointments = []
+    all_appointments.each do |appt|
+      if appt.date[6..9].to_i < time[6..9].to_i
+        appt.destroy
+      elsif (appt.date[6..9].to_i == time[6..9].to_i) && (appt.date[0..1].to_i < time[0..1].to_i)
+        appt.destroy
+      elsif (appt.date[6..9].to_i == time[6..9].to_i) && (appt.date[0..1].to_i == time[0..1].to_i) && (appt.date[3..4].to_i < time[3..4].to_i)
+        appt.destroy
+      else
+        appointments.push(appt)
+      end
     end
     appointment_users = appointments.map{|appointment| [User.find(appointment.appointment_user_id), appointment]}
     render json: appointment_users
@@ -16,9 +25,18 @@ class Api::V1::AppointmentsController < Api::V1::ApplicationController
     appointment = Appointment.create(appointment_params)
 
     all_appointments = Appointment.where(business_id: params[:business_id])
-    time = DateTime.now
-    appointments = all_appointments.select do |appointment|
-      (appointment.date == time.strftime("%m/%d/%Y"))||(appointment.date == (time + 1).strftime("%m/%d/%Y"))||(appointment.date == (time + 2).strftime("%m/%d/%Y"))||(appointment.date == (time + 3).strftime("%m/%d/%Y"))||(appointment.date == (time + 4).strftime("%m/%d/%Y"))||(appointment.date == (time + 5).strftime("%m/%d/%Y"))||(appointment.date == (time + 6).strftime("%m/%d/%Y"))
+    time = DateTime.now.strftime("%m/%d/%Y")
+    appointments = []
+    all_appointments.each do |appt|
+      if appt.date[6..9].to_i < time[6..9].to_i
+        appt.destroy
+      elsif (appt.date[6..9].to_i == time[6..9].to_i) && (appt.date[0..1].to_i < time[0..1].to_i)
+        appt.destroy
+      elsif (appt.date[6..9].to_i == time[6..9].to_i) && (appt.date[0..1].to_i == time[0..1].to_i) && (appt.date[3..4].to_i < time[3..4].to_i)
+        appt.destroy
+      else
+        appointments.push(appt)
+      end
     end
     appointment_users = appointments.map{|appointment| [User.find(appointment.appointment_user_id), appointment]}
     render json: appointment_users
@@ -41,9 +59,18 @@ class Api::V1::AppointmentsController < Api::V1::ApplicationController
     current_appointment.destroy
 
     all_appointments = Appointment.where(business_id: params[:business_id])
-    time = DateTime.now
-    appointments = all_appointments.select do |appointment|
-      (appointment.date == time.strftime("%m/%d/%Y"))||(appointment.date == (time + 1).strftime("%m/%d/%Y"))||(appointment.date == (time + 2).strftime("%m/%d/%Y"))||(appointment.date == (time + 3).strftime("%m/%d/%Y"))||(appointment.date == (time + 4).strftime("%m/%d/%Y"))||(appointment.date == (time + 5).strftime("%m/%d/%Y"))||(appointment.date == (time + 6).strftime("%m/%d/%Y"))
+    time = DateTime.now.strftime("%m/%d/%Y")
+    appointments = []
+    all_appointments.each do |appt|
+      if appt.date[6..9].to_i < time[6..9].to_i
+        appt.destroy
+      elsif (appt.date[6..9].to_i == time[6..9].to_i) && (appt.date[0..1].to_i < time[0..1].to_i)
+        appt.destroy
+      elsif (appt.date[6..9].to_i == time[6..9].to_i) && (appt.date[0..1].to_i == time[0..1].to_i) && (appt.date[3..4].to_i < time[3..4].to_i)
+        appt.destroy
+      else
+        appointments.push(appt)
+      end
     end
     appointment_users = appointments.map{|appointment| [User.find(appointment.appointment_user_id), appointment]}
     render json: appointment_users

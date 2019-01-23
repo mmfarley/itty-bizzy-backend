@@ -1,12 +1,3 @@
-# people_pics = [
-# https://cdn.pixabay.com/photo/2016/03/08/19/22/person-1244540_960_720.jpg,
-# https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZbcz8bHJh0lYcOYR8f5MMdbjbWe5os61Bjv28_2-ozyA_xPKC,
-# https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUto4NLIE_aEYVw1tbXLDUpDJdv3NVp_I0TzOftqfyT1MXmVF_bw,
-# https://www.theinsyder.com/wp-content/uploads/2016/03/041614-b-real-relationships-reasons-we-love-our-men-attractive-man-facial-hair-beard-smiling-happy-beach-dating.png,
-# https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZIkp_Prdd9QkJ7m3xsWbyq9gswP3h7uKzw3ssTnqtKHVicscs]
-
-
-
 Message.destroy_all
 Bill.destroy_all
 Client.destroy_all
@@ -14,7 +5,6 @@ Appointment.destroy_all
 Business.destroy_all
 User.destroy_all
 
-# User.create!(email: 'meg@ex.com', password: 'balls')
 meg = User.create("email": "meg@e.com", "password": "balls", "name": "Meg")
 jan = User.create("email": "jan@e.com", "password": "balls", "name": "Janu")
 
@@ -41,6 +31,7 @@ jan_biz = Business.create("hourly_rate": 40.00, "service_type": "programmer", "d
 meg_biz.appointments.create("date":"01/22/2019", "appointment_user_id": jan.id)
 meg_biz.appointments.create("date":"01/20/2019", "appointment_user_id": jan.id)
 meg_biz.appointments.create("date":"01/23/2019", "appointment_user_id": jan.id)
+
 
 meg_biz.clients.create("client_user_id": jan.id)
 
