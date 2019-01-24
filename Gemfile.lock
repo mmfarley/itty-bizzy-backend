@@ -51,6 +51,8 @@ GEM
     concurrent-ruby (1.1.4)
     crass (1.0.4)
     erubi (1.8.0)
+    faker (1.9.1)
+      i18n (>= 0.7)
     ffi (1.10.0)
     figaro (1.1.1)
       thor (~> 0.14)
@@ -141,6 +143,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.1.0)
   byebug
+  faker
   figaro
   jwt
   listen (>= 3.0.5, < 3.2)

@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2019_01_22_183110) do
     t.datetime "updated_at", null: false
     t.index ["content"], name: "index_messages_on_content"
     t.index ["messaged_user_id"], name: "index_messages_on_messaged_user_id"
-    t.index ["user_id", "messaged_user_id", "content"], name: "index_messages_on_user_id_and_messaged_user_id_and_content", unique: true
+    t.index ["user_id", "messaged_user_id", "content"], name: "index_messages_on_user_id_and_messaged_user_id_and_content"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
