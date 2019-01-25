@@ -7,7 +7,7 @@ class Api::V1::ClientsController < Api::V1::ApplicationController
     client_users = clients.map{|client| [User.find(client.client_user_id), client.id]}
     render json: client_users
   end
-  #test this
+
   def client_businesses
     clients = Client.where(client_user_id: params[:client_user_id])
     client_businesses = clients.map{|client| Business.find(client.business_id)}
@@ -15,11 +15,26 @@ class Api::V1::ClientsController < Api::V1::ApplicationController
   end
 
   def create
-    client = Client.create(client_params)
+    client = Client.create(business_id: params[:business_id], client_user_id: params[:client_user_id])
 
     clients = Client.where(business_id: params[:business_id])
     client_users = clients.map{|client| [User.find(client.client_user_id), client.id]}
-    render json: client_users
+
+    id = params[:user_id]
+    received_messages = Message.where(messaged_user_id: id)
+
+    messaged_user_ids = received_messages.map{|message| message.user_id}
+    biz_clients_ids = clients.map{|client| client.client_user_id}
+
+    filtered_user_ids = (messaged_user_ids.uniq - biz_clients_ids.uniq)|(biz_clients_ids.uniq - messaged_user_ids.uniq)
+
+    messaged_users = []
+    filtered_user_ids.each do |id|
+      messaged_user = User.find(id)
+      messaged_users.push(messaged_user)
+    end
+
+    render json: {client_users: client_users, messaged_users: messaged_users}
   end
 
   def index
@@ -40,11 +55,26 @@ class Api::V1::ClientsController < Api::V1::ApplicationController
 
     clients = Client.where(business_id: params[:business_id])
     client_users = clients.map{|client| [User.find(client.client_user_id), client.id]}
-    render json: client_users
+
+    id = params[:user_id]
+    received_messages = Message.where(messaged_user_id: id)
+
+    messaged_user_ids = received_messages.map{|message| message.user_id}
+    biz_clients_ids = clients.map{|client| client.client_user_id}
+
+    filtered_user_ids = (messaged_user_ids.uniq - biz_clients_ids.uniq)|(biz_clients_ids.uniq - messaged_user_ids.uniq)
+
+    messaged_users = []
+    filtered_user_ids.each do |id|
+      messaged_user = User.find(id)
+      messaged_users.push(messaged_user)
+    end
+
+    render json: {client_users: client_users, messaged_users: messaged_users}
   end
 
   def client_params
-    params.permit(:client_user_id, :business_id, :id)
+    params.permit(:client_user_id, :business_id, :id, :user_id)
   end
 
   def define_current_client

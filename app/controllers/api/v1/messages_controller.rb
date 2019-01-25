@@ -31,7 +31,7 @@ class Api::V1::MessagesController < Api::V1::ApplicationController
 
   def messaged_users
     id = params[:user_id]
-    received_messages = Message.where(messaged_user_id: params[:user_id])
+    received_messages = Message.where(messaged_user_id: id)
 
     messaged_user_ids = received_messages.map{|message| message.user_id}
     user_biz = Business.where(user_id: id)
